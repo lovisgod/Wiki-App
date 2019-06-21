@@ -10,23 +10,27 @@ import kotlinx.android.synthetic.main.activity_main2.*
 
 class Main2Activity : AppCompatActivity() {
 
+    private val exploreFragment : ExploereFragment
+    private val favouritesFragment : FavouritesFragment
+    private val historyFragment : HistoryFragment
+
+    init {
+        exploreFragment = ExploereFragment()
+        favouritesFragment = FavouritesFragment()
+        historyFragment = HistoryFragment()
+    }
+
     private lateinit var textMessage: TextView
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
         when (item.itemId) {
-            R.id.navigation_home -> {
-                textMessage.setText(R.string.title_home)
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_dashboard -> {
-                textMessage.setText(R.string.title_dashboard)
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_notifications -> {
-                textMessage.setText(R.string.title_notifications)
-                return@OnNavigationItemSelectedListener true
-            }
+          R.id.navigation_explore -> transaction.replace(R.id.fragment_container,exploreFragment)
+          R.id.navigation_favourite -> transaction.replace(R.id.fragment_container, favouritesFragment)
+          R.id.navigation_history -> transaction.replace(R.id.fragment_container, historyFragment)
         }
-        false
+        transaction.commit()
+        true
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,9 +38,12 @@ class Main2Activity : AppCompatActivity() {
         setContentView(R.layout.activity_main2)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
-       message.setOnClickListener { view ->
-           startActivity(Intent(this, ArticleDetailActivity ::class.java))
-       }
+        setSupportActionBar(toolbar)
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+
+        // display the explore fragment oncreate
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.add(R.id.fragment_container, exploreFragment)
+        transaction.commit()
     }
 }

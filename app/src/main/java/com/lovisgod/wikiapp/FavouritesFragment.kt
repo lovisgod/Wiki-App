@@ -9,28 +9,26 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_favourites.*
-import kotlinx.android.synthetic.main.fragment_history.*
-import java.util.*
 
 
 /**
  * A simple [Fragment] subclass.
  *
  */
-class HistoryFragment : Fragment() {
+class FavouritesFragment : Fragment() {
 
-    var article_history_recycler : RecyclerView? = null
+    var favourite_recycler : RecyclerView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_history, container, false)
+        var view = inflater.inflate(R.layout.fragment_favourites, container, false)
+        favourite_recycler = view.findViewById(R.id.favourite_recycler)
 
-        article_history_recycler= view.findViewById(R.id.article_history_recycler)
-        article_history_recycler!!.layoutManager = LinearLayoutManager(context)
-        article_history_recycler!!.adapter = ArticleListRecyclerAdapter()
+        favourite_recycler!!.layoutManager = LinearLayoutManager(context)
+        favourite_recycler!!.adapter = ArticleCardRecyclerAdapter()
         return view
     }
 
