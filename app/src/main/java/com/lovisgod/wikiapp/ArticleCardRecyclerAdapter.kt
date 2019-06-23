@@ -1,18 +1,23 @@
 package com.lovisgod.wikiapp
 
 import Holders.CardHolder
+import Models.WikiPage
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.lovisgod.wikiapp.R
 
 class ArticleCardRecyclerAdapter: RecyclerView.Adapter<CardHolder>() {
+    val currentResults : ArrayList<WikiPage> = ArrayList<WikiPage>()
+
     override fun getItemCount(): Int {
-        return 15 //temporal
+        return currentResults.size
     }
 
     override fun onBindViewHolder(holder: CardHolder, position: Int) {
         //this is where we update our views
+        var page = currentResults[position]
+        holder?.updateWikipage(page)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardHolder {
